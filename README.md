@@ -6,11 +6,19 @@ Installs Certbot (for Let's Encrypt) for RHEL/CentOS or Debian/Ubuntu.
 
 ## Requirements
 
-Let's Encrypt requires `git` to be installed. You can install using the `geerlingguy.git` role.
+Certbot requires Git to be installed. You can install Git using the `geerlingguy.git` role.
 
 ## Role Variables
 
-None.
+    certbot_repo: https://github.com/certbot/certbot.git
+    certbot_version: master
+    certbot_keep_updated: yes
+
+Certbot code repository options. This role clones the agent from the configured repo, then makes the `certbot-auto` script executable.
+
+    certbot_dir: /opt/certbot
+
+The directory inside which Certbot will be cloned.
 
 ## Dependencies
 
