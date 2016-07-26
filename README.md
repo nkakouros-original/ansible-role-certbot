@@ -28,7 +28,7 @@ None.
 
     - hosts: servers
       roles:
-        - geerlingguy.letsencrypt
+        - geerlingguy.certbot
 
 After installation, you can create certificates using the `certbot-auto` script, which by default is installed inside the configured `certbot_dir`, so by default, `/opt/certbot/certbot-auto`. Here are some example commands to configure certificates with Certbot:
 
