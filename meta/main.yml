@@ -22,3 +22,9 @@ galaxy_info:
     - networking
     - system
     - web
+    - certbot
+    - letsencrypt
+    - encryption
+    - certificates
+    - ssl
+    - https
