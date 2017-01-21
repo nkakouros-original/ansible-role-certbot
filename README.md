@@ -34,6 +34,12 @@ None.
 ## Example Playbook
 
     - hosts: servers
+    
+      vars:
+        certbot_auto_renew_user: your_username_here
+        certbot_auto_renew_minute: 20
+        certbot_auto_renew_hour: 5
+    
       roles:
         - geerlingguy.letsencrypt
 
@@ -45,9 +51,7 @@ After installation, you can create certificates using the `certbot-auto` script,
     # Generate certs, but don't modify Apache configuration (safer).
     /opt/certbot/certbot-auto --apache certonly
 
-To set up renewals, you should run the following command periodically (e.g. once or twice per day):
-
-    /opt/certbot/certbot-auto renew --quiet --no-self-upgrade
+By default, this role adds a cron job that will renew all installed certificates once per day at the hour and minute of your choosing.
 
 You can test the auto-renewal (without actually renewing the cert) with the command:
 
