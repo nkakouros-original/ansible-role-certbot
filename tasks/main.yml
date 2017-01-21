@@ -10,3 +10,12 @@
   file:
     path: "{{ certbot_dir }}/certbot-auto"
     mode: 0755
+
+- name: Add cron job for 'certbot-auto renew' (if configured).
+  cron:
+    name: Certbot automatic renewal.
+    job: "{{ certbot_dir }}/certbot-auto renew --quiet --no-self-upgrade"
+    minute: "{{ certbot_auto_renew_minute }}"
+    hour: "{{ certbot_auto_renew_hour }}"
+    user: "{{ certbot_auto_renew_user }}"
+  when: certbot_auto_renew
