@@ -20,6 +20,13 @@ Certbot code repository options. This role clones the agent from the configured 
 
 The directory inside which Certbot will be cloned.
 
+    certbot_auto_renew: true
+    certbot_auto_renew_user: "{{ ansible_user }}"
+    certbot_auto_renew_hour: 3
+    certbot_auto_renew_minute: 30
+
+By default, this role configures a cron job to run under the provided user account at the given hour and minute, every day. The defaults run `certbot-auto renew` via cron every day at 03:30:00 by the user you use in your Ansible playbook. It's preferred that you set a custom user/hour/minute so the renewal is during a low-traffic period and done by a non-root user account.
+
 ## Dependencies
 
 None.
