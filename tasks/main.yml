@@ -5,6 +5,7 @@
     dest: "{{ certbot_dir }}"
     version: "{{ certbot_version }}"
     update: "{{ certbot_keep_updated }}"
+    force: yes
 
 - name: Ensure certbot-auto is executable.
   file:
