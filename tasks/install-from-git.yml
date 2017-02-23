@@ -1,0 +1,13 @@
+---
+- name: Clone Certbot into configured directory.
+  git:
+    repo: "{{ certbot_repo }}"
+    dest: "{{ certbot_dir }}"
+    version: "{{ certbot_version }}"
+    update: "{{ certbot_keep_updated }}"
+    force: yes
+
+- name: Ensure certbot-auto is executable.
+  file:
+    path: "{{ certbot_dir }}/certbot-auto"
+    mode: 0755
