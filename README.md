@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-certbot.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-certbot)
 
-Installs Certbot (for Let's Encrypt) for RHEL/CentOS or Debian/Ubuntu.
+Installs and configures Certbot (for Let's Encrypt).
 
 ## Requirements
 
