@@ -7,7 +7,11 @@
     update: "{{ certbot_keep_updated }}"
     force: yes
 
+- name: Set Certbot script variable
+  set_fact:
+    certbot_script: "{{ certbot_dir }}/certbot-auto"
+
 - name: Ensure certbot-auto is executable.
   file:
-    path: "{{ certbot_dir }}/certbot-auto"
+    path: "{{ certbot_script }}"
     mode: 0755

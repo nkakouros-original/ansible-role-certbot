@@ -1,5 +1,9 @@
 ---
+- include: install-from-package.yml
+  when: not certbot_from_git
+
 - include: install-from-git.yml
+  when: certbot_from_git
 
 - include: renew-cron.yml
   when: certbot_auto_renew
