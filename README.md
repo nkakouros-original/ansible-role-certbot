@@ -21,6 +21,10 @@ By default, this role configures a cron job to run under the provided user accou
 
 ### Variables Relavant for Source Installation from Git
 
+Instead of installing Certbot from distribution's package management, installing from Git repository is also an option. This might be useful in several cases, but especially when older LTS distributions don't ship Certbot yet. These include CentOS < 7, Ubuntu < 16.10 and Debian < 8. Debian 8 includes Certbot package when packports repository is enabled.
+
+In case source installation from Git is intended, the following variables are relevant:
+
     certbot_install_from_source: yes
     certbot_repo: https://github.com/certbot/certbot.git
     certbot_version: master
