@@ -17,7 +17,7 @@ env:
   - distro: ubuntu1404
     init: /sbin/init
     run_opts: ""
-    playbook: test.yml
+    playbook: test-source-install.yml
   - distro: ubuntu1204
     init: /sbin/init
     run_opts: ""
