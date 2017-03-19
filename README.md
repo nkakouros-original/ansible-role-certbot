@@ -6,20 +6,11 @@ Installs and configures Certbot (for Let's Encrypt).
 
 ## Requirements
 
-Certbot requires Git to be installed if one wants to install Certbot from Git repository instead of package management. You can install Git using the `geerlingguy.git` role.
+If one wants to install Certbot from upstream Git repository instead of distribution's package management, this role requires Git to be installed. You can install Git using the `geerlingguy.git` role.
 
 ## Role Variables
 
-    certbot_install_from_source: no
-    certbot_repo: https://github.com/certbot/certbot.git
-    certbot_version: master
-    certbot_keep_updated: yes
-
-Certbot Git repository options. This role clones the agent from the configured repo, then makes the `certbot-auto` script executable if `certbot_install_from_source` is `yes`. Otherwise it will be installed from distribution's package management.
-
-    certbot_dir: /opt/certbot
-
-The directory inside which Certbot will be cloned when using Git.
+The variable `certbot_install_from_source` controls whether to install Certbot from Git or package management. The latter is the default, so the variable defaults to `no`.
 
     certbot_auto_renew: true
     certbot_auto_renew_user: "{{ ansible_user }}"
@@ -27,6 +18,19 @@ The directory inside which Certbot will be cloned when using Git.
     certbot_auto_renew_minute: 30
 
 By default, this role configures a cron job to run under the provided user account at the given hour and minute, every day. The defaults run `certbot renew` (or `certbot-auto renew`) via cron every day at 03:30:00 by the user you use in your Ansible playbook. It's preferred that you set a custom user/hour/minute so the renewal is during a low-traffic period and done by a non-root user account.
+
+### Variables Relavant for Source Installation from Git
+
+    certbot_install_from_source: yes
+    certbot_repo: https://github.com/certbot/certbot.git
+    certbot_version: master
+    certbot_keep_updated: yes
+
+Certbot Git repository options. This clones the configured `certbot_repo`, respecting the `certbot_version` setting. If `certbot_keep_updated` is set to `yes`, the repository is updated every time this role runs.
+
+    certbot_dir: /opt/certbot
+
+The directory inside which Certbot will be cloned.
 
 ## Dependencies
 
