@@ -7,7 +7,7 @@
     update: "{{ certbot_keep_updated }}"
     force: yes
 
-- name: Set Certbot script variable
+- name: Set Certbot script variable.
   set_fact:
     certbot_script: "{{ certbot_dir }}/certbot-auto"
 

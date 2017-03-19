@@ -10,12 +10,12 @@ Certbot requires Git to be installed if one wants to install Certbot from Git re
 
 ## Role Variables
 
-    certbot_from_git: no
+    certbot_install_from_source: no
     certbot_repo: https://github.com/certbot/certbot.git
     certbot_version: master
     certbot_keep_updated: yes
 
-Certbot Git repository options. This role clones the agent from the configured repo, then makes the `certbot-auto` script executable if `certbot_from_git` is `yes`. Otherwise it will be installed from distribution's package management.
+Certbot Git repository options. This role clones the agent from the configured repo, then makes the `certbot-auto` script executable if `certbot_install_from_source` is `yes`. Otherwise it will be installed from distribution's package management.
 
     certbot_dir: /opt/certbot
 
