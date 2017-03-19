@@ -1,0 +1,14 @@
+---
+- hosts: all
+
+  vars:
+    certbot_install_from_source: yes
+
+  pre_tasks:
+    - name: Install cron (RedHat).
+      yum: name=cronie state=present
+      when: ansible_os_family == 'RedHat'
+
+  roles:
+    - geerlingguy.git
+    - role_under_test
