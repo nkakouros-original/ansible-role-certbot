@@ -3,25 +3,25 @@ services: docker
 
 env:
   - distro: centos7
+    playbook: test.yml
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
   - distro: centos6
+    playbook: test-source-install.yml
     init: /sbin/init
     run_opts: ""
-    playbook: test-source-install.yml
   - distro: ubuntu1604
+    playbook: test.yml
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
     playbook: test-source-install.yml
-  - distro: ubuntu1204
     init: /sbin/init
     run_opts: ""
+  - distro: debian8
     playbook: test.yml
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
   # Pull container.
