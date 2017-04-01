@@ -1,14 +1,4 @@
 ---
-- name: Define certbot_package (Ubuntu 16.04).
-  set_fact:
-    certbot_package: letsencrypt
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
-
-- name: Define certbot_package.
-  set_fact:
-    certbot_package: certbot
-  when: certbot_package is undefined
-
 - name: Install Certbot.
   package: "name={{ certbot_package }} state=present"
 
