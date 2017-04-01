@@ -19,7 +19,7 @@ env:
     init: /sbin/init
     run_opts: ""
   - distro: debian8
-    playbook: test.yml
+    playbook: test-source-install.yml
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
