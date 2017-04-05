@@ -1,6 +1,9 @@
 ---
 - hosts: all
 
+  vars:
+    certbot_install_from_source: yes
+
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
@@ -16,4 +19,5 @@
       when: ansible_os_family == 'Debian'
 
   roles:
+    - geerlingguy.git
     - role_under_test
