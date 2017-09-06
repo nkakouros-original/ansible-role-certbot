@@ -9,5 +9,5 @@
 - name: Create certbot-renew timer
   template:
     src: certbot-renew.timer
-    dest: /etc/systemd/system/certbot-renew.timer
+    dest: /etc/systemd/system/certbot-renew.timer.j2
   notify: restart-certbot-renew-service
