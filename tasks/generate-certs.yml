@@ -6,6 +6,12 @@
     - "certbot_register_email != ''"
     msg: "You need to provide an email address you own to register with Let's Encrypt."
 
+- name: Make sure we have domains
+  assert:
+    that:
+    - "certbot_domains != []"
+    msg: "You need to provide at least one domain to generate certificates for."
+
 - name: Register with Let's Encrypt
   command: "{{ certbot_register_command }}"
   args:
