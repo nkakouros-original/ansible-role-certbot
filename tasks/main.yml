@@ -7,5 +7,5 @@
 - include: install-from-source.yml
   when: certbot_install_from_source
 
-- include: renew-cron.yml
+- include: systemd.yml
   when: certbot_auto_renew

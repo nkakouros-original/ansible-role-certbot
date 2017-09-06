@@ -1,0 +1,13 @@
+---
+
+- name: Create certbot-renew service
+  template:
+    src: certbot-renew.service.j2
+    dest: /etc/systemd/system/certbot-renew.service
+  notify: restart-certbot-renew-service
+
+- name: Create certbot-renew timer
+  template:
+    src: certbot-renew.timer
+    dest: /etc/systemd/system/certbot-renew.timer
+  notify: restart-certbot-renew-service
