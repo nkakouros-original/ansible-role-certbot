@@ -24,11 +24,11 @@ certbot_handle_certs: true
 certbot_register_email: user@example.com
 
 # The command to run to register with Let's Encrypt
-certbot_register_command: certbot --non-interactive --agree-tos --email "{{ certbot_register_email }}"
+certbot_register_command: "{{ certbot_script }} --non-interactive --agree-tos --email {{ certbot_register_email }}"
 
 # The domains to generate certs for
 certbot_domains:
 - 'example.com'
 
 # The command to run to generate the certificates
-certbot_cert_command: certbot certonly --noninteractive --standalone
+certbot_cert_command: "{{ certbot_script }} certonly --noninteractive --standalone"
