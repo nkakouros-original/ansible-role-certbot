@@ -4,7 +4,7 @@ certbot_config_file_options: {}
 
 # Certbot auto-renew cron job configuration (for certificate renewals).
 certbot_auto_renew: true
-certbot_auto_renew_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER, true) | default(ansible_user_id, true) }}"
+certbot_auto_renew_user: "{{ lookup('env', 'USER') }}"
 certbot_auto_renew_hour: 3
 certbot_auto_renew_minute: 30
 
