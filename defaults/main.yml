@@ -29,8 +29,7 @@ certbot_register_email: ''
 certbot_register_command: "{{ certbot_script }} register --non-interactive --agree-tos --email {{ certbot_register_email }}"
 
 # The domains to generate certs for
-certbot_domains:
-- 'example.com'
+certbot_domains: []
 
 # The command to run to generate the certificates
 certbot_cert_command: "{{ certbot_script }} certonly --noninteractive --standalone"
