@@ -8,6 +8,8 @@
 
 - name: Register with Let's Encrypt
   command: "{{ certbot_register_command }}"
+  args:
+    creates: /etc/letsencrypt/accounts
 
 - name: Generate certificates
   command: "{{ certbot_cert_command }} -d {{ certbot_domains | join(' -d ') }}"
