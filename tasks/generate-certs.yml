@@ -1,0 +1,7 @@
+---
+
+- name: Register with Let's Encrypt
+  command: "{{ certbot_register_command }}"
+
+- name: Generate certificates
+  command: "{{ certbot_cert_command }} -d {{ certbot_domains | join(' -d ') }}"
