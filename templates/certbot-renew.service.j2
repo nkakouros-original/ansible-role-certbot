@@ -1,0 +1,9 @@
+[Unit]
+Description=Let's Encrypt renewal
+
+[Service]
+User={{ certbot_auto_renew_user }}
+Type=oneshot
+ExecStart={{ certbot_script }} renew --quiet --agree-tos
+
+ExecStartPost=/bin/systemctl reload {{ certbot_web_service }}.service

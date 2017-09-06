@@ -10,5 +10,5 @@
 - include: generate-certs.yml
   when: certbot_handle_certs
 
-- include: renew-cron.yml
+- include: systemd.yml
   when: certbot_auto_renew
