@@ -21,7 +21,9 @@ certbot_dir: /opt/certbot
 # Set to true to have this role register and generate certificates for your
 # domains.
 certbot_handle_certs: true
-certbot_register_email: user@example.com
+
+# The email to register with (required).
+certbot_register_email: ''
 
 # The command to run to register with Let's Encrypt
 certbot_register_command: "{{ certbot_script }} register --non-interactive --agree-tos --email {{ certbot_register_email }}"

@@ -1,5 +1,11 @@
 ---
 
+- name: Make sure we have an email
+  assert:
+    that:
+    - "certbot_register_email is defined"
+    msg: "You need to provide an email address you own to register with Let's Encrypt."
+
 - name: Register with Let's Encrypt
   command: "{{ certbot_register_command }}"
 
