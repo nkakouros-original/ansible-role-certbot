@@ -6,6 +6,22 @@ certbot_auto_renew_hour: 3
 certbot_auto_renew_minute: 30
 certbot_auto_renew_options: "--quiet --no-self-upgrade"
 
+# Parameters used when creating new Certbot certs.
+certbot_admin_email: email@example.com
+certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ item.email | default(certbot_admin_email) }} -d {{ item.domains | join(',') }}"
+certbot_create_if_missing: no
+certbot_create_stop_services:
+  - nginx
+  # - apache
+  # - varnish
+certbot_certs: []
+  # - email: janedoe@example.com
+  #   domains:
+  #     - example1.com
+  #     - example2.com
+  # - domains:
+  #     - example3.com
+
 # To install from source (on older OSes or if you need a specific or newer
 # version of Certbot), set this variable to `yes` and configure other options.
 certbot_install_from_source: no
