@@ -8,7 +8,7 @@ certbot_auto_renew_options: "--quiet --no-self-upgrade"
 
 # Parameters used when creating new Certbot certs.
 certbot_admin_email: email@example.com
-certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ item.email | default(certbot_admin_email) }} -d {{ item.domains | join(',') }}"
+certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }}"
 certbot_create_if_missing: no
 certbot_create_stop_services:
   - nginx

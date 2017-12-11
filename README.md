@@ -20,6 +20,10 @@ The variable `certbot_install_from_source` controls whether to install Certbot f
 
 By default, this role configures a cron job to run under the provided user account at the given hour and minute, every day. The defaults run `certbot renew` (or `certbot-auto renew`) via cron every day at 03:30:00 by the user you use in your Ansible playbook. It's preferred that you set a custom user/hour/minute so the renewal is during a low-traffic period and done by a non-root user account.
 
+### Automatic Certificate Generation
+
+TODO: Add new variables and documentation here.
+
 ### Source Installation from Git
 
 You can install Certbot from it's Git source repository if desired. This might be useful in several cases, but especially when older distributions don't have Certbot packages available (e.g. CentOS < 7, Ubuntu < 16.10 and Debian < 8).

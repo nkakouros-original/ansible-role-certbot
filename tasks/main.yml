@@ -10,6 +10,8 @@
 - include: create-cert-standalone.yml
   with_items: "{{ certbot_certs }}"
   when: certbot_create_if_missing
+  loop_control:
+    loop_var: cert_item
 
 - include: renew-cron.yml
   when: certbot_auto_renew
