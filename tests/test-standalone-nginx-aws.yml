@@ -87,12 +87,10 @@
   vars:
     certbot_admin_email: https@servercheck.in
     certbot_create_if_missing: yes
-    certbot_create_stop_services:
-      - nginx
+    certbot_create_standalone_stop_services: []
     certbot_certs:
       - domains:
           - certbot-test.servercheck.in
-    certbot_create_stop_services: []
     nginx_vhosts:
       - listen: "443 ssl http2"
         server_name: "certbot-test.servercheck.in"
@@ -176,3 +174,5 @@
         record: certbot-test.servercheck.in
         type: A
         ttl: 300
+        # See: https://github.com/ansible/ansible/pull/32297
+        value: []
