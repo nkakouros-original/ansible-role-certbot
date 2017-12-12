@@ -20,6 +20,44 @@ The variable `certbot_install_from_source` controls whether to install Certbot f
 
 By default, this role configures a cron job to run under the provided user account at the given hour and minute, every day. The defaults run `certbot renew` (or `certbot-auto renew`) via cron every day at 03:30:00 by the user you use in your Ansible playbook. It's preferred that you set a custom user/hour/minute so the renewal is during a low-traffic period and done by a non-root user account.
 
+### Automatic Certificate Generation
+
+Currently there is one built-in method for generating new certificates using this role: `standalone`. Other methods (e.g. using nginx or apache and a webroot) may be added in the future.
+
+**For a complete example**: see the fully functional test playbook in [tests/test-standalone-nginx-aws.yml](tests/test-standalone-nginx-aws.yml).
+
+    certbot_create_if_missing: no
+    certbot_create_method: standalone
+
+Set `certbot_create_if_missing` to `yes` or `True` to let this role generate certs. Set the method used for generating certs with the `certbot_create_method` variable—current allowed values include: `standalone`.
+
+    certbot_admin_email: email@example.com
+
+The email address used to agree to Let's Encrypt's TOS and subscribe to cert-related notifications. This should be customized and set to an email address that you or your organization regularly monitors.
+
+    certbot_certs: []
+      # - email: janedoe@example.com
+      #   domains:
+      #     - example1.com
+      #     - example2.com
+      # - domains:
+      #     - example3.com
+
+A list of domains (and other data) for which certs should be generated. You can add an `email` key to any list item to override the `certbot_admin_email`.
+
+    certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }}"
+
+The `certbot_create_command` defines the command used to generate the cert.
+
+#### Standalone Certificate Generation
+
+    certbot_create_standalone_stop_services:
+      - nginx
+
+Services that should be stopped while `certbot` runs it's own standalone server on ports 80 and 443. If you're running Apache, set this to `apache2` (Ubuntu), or `httpd` (RHEL), or if you have Nginx on port 443 and something else on port 80 (e.g. Varnish, a Java app, or something else), add it to the list so it is stopped when the certificate is generated.
+
+These services will only be stopped the first time a new cert is generated.
+
 ### Source Installation from Git
 
 You can install Certbot from it's Git source repository if desired. This might be useful in several cases, but especially when older distributions don't have Certbot packages available (e.g. CentOS < 7, Ubuntu < 16.10 and Debian < 8).
@@ -51,9 +89,13 @@ None.
       roles:
         - geerlingguy.certbot
 
-### Creating certificates with certbot
+See other examples in the `tests/` directory.
 
-After installation, you can create certificates using the `certbot` (or `certbot-auto`) script (use `letsencrypt` on Ubuntu 16.04, or use `/opt/certbot/certbot-auto` if installing from source/Git. Here are some example commands to configure certificates with Certbot:
+### Manually creating certificates with certbot
+
+_Note: You can have this role automatically generate certificates; see the "Automatic Certificate Generation" documentation above._
+
+You can manually create certificates using the `certbot` (or `certbot-auto`) script (use `letsencrypt` on Ubuntu 16.04, or use `/opt/certbot/certbot-auto` if installing from source/Git. Here are some example commands to configure certificates with Certbot:
 
     # Automatically add certs for all Apache virtualhosts (use with caution!).
     certbot --apache
@@ -61,15 +103,15 @@ After installation, you can create certificates using the `certbot` (or `certbot
     # Generate certs, but don't modify Apache configuration (safer).
     certbot --apache certonly
 
-If you want to fully automate the process of adding a new certificate, you can do so using the command line options to register, accept the terms of service, and then generate a cert using the standalone server:
+If you want to fully automate the process of adding a new certificate, but don't want to use this role's built in functionality, you can do so using the command line options to register, accept the terms of service, and then generate a cert using the standalone server:
 
-  1. Make sure any services listening on port 80 (Apache, Nginx, Varnish, etc.) are stopped.
+  1. Make sure any services listening on ports 80 and 443 (Apache, Nginx, Varnish, etc.) are stopped.
   2. Register with something like `certbot register --agree-tos --email [your-email@example.com]`
     - Note: You won't need to do this step in the future, when generating additional certs on the same server.
   3. Generate a cert for a domain whose DNS points to this server: `certbot certonly --noninteractive --standalone -d example.com -d www.example.com`
-  4. Re-start whatever was listening on port 80 before.
+  4. Re-start whatever was listening on ports 80 and 443 before.
   5. Update your webserver's virtualhost TLS configuration to point at the new certificate (`fullchain.pem`) and private key (`privkey.pem`) Certbot just generated for the domain you passed in the `certbot` command.
-  6. Restart your webserver so it uses the new HTTPS virtualhost configuration.
+  6. Reload or restart your webserver so it uses the new HTTPS virtualhost configuration.
 
 ### Certbot certificate auto-renewal
 
