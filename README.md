@@ -28,7 +28,7 @@ Currently there is one built-in method for generating new certificates using thi
 
 **For a complete example**: see the fully functional test playbook in [tests/test-standalone-nginx-aws.yml](tests/test-standalone-nginx-aws.yml).
 
-    certbot_create_if_missing: no
+    certbot_create_if_missing: false
     certbot_create_method: standalone
 
 Set `certbot_create_if_missing` to `yes` or `True` to let this role generate certs. Set the method used for generating certs with the `certbot_create_method` variable—current allowed values include: `standalone`.
@@ -64,10 +64,10 @@ These services will only be stopped the first time a new cert is generated.
 
 You can install Certbot from it's Git source repository if desired. This might be useful in several cases, but especially when older distributions don't have Certbot packages available (e.g. CentOS < 7, Ubuntu < 16.10 and Debian < 8).
 
-    certbot_install_from_source: no
+    certbot_install_from_source: false
     certbot_repo: https://github.com/certbot/certbot.git
     certbot_version: master
-    certbot_keep_updated: yes
+    certbot_keep_updated: true
 
 Certbot Git repository options. To install from source, set `certbot_install_from_source` to `yes`. This clones the configured `certbot_repo`, respecting the `certbot_version` setting. If `certbot_keep_updated` is set to `yes`, the repository is updated every time this role runs.
 
