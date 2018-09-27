@@ -5,6 +5,7 @@
 
   vars:
     certbot_install_from_source: true
+    certbot_auto_renew_user: root
 
   pre_tasks:
     - name: Update apt cache.
