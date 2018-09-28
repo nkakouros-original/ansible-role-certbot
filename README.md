@@ -75,6 +75,10 @@ Certbot Git repository options. To install from source, set `certbot_install_fro
 
 The directory inside which Certbot will be cloned.
 
+### Wildcard Certificates
+
+Let's Encrypt supports [generating wildcard certificates](https://community.letsencrypt.org/t/acme-v2-and-wildcard-certificate-support-is-live/55579), but the process for generating and using them is slightly more involved. See comments in [this pull request](https://github.com/geerlingguy/ansible-role-certbot/pull/60#issuecomment-423919284) for an example of how to use this role to maintain wildcard certs.
+
 ## Dependencies
 
 None.
