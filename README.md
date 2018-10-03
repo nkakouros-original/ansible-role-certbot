@@ -26,7 +26,7 @@ By default, this role configures a cron job to run under the provided user accou
 
 Currently there is one built-in method for generating new certificates using this role: `standalone`. Other methods (e.g. using nginx or apache and a webroot) may be added in the future.
 
-**For a complete example**: see the fully functional test playbook in [tests/test-standalone-nginx-aws.yml](tests/test-standalone-nginx-aws.yml).
+**For a complete example**: see the fully functional test playbook in [molecule/default/playbook-standalone-nginx-aws.yml](molecule/default/playbook-standalone-nginx-aws.yml).
 
     certbot_create_if_missing: false
     certbot_create_method: standalone
