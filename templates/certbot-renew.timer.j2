@@ -3,6 +3,7 @@ Description=Periodically check for Let's Encrypt's certificates renewal
 
 [Timer]
 OnCalendar=*-*-* {{ certbot_auto_renew_hour }}:{{ certbot_auto_renew_minute }}:00
+RandomizedDelaySec=43200
 Persistent=true
 
 [Install]

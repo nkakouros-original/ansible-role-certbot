@@ -1,10 +1,17 @@
 ---
 
+- name: Get absolute path of certbot executable
+  command: "which {{ certbot_script }}"
+  register: certbot_script_absolute
+  changed_when: false
+
 - name: Create certbot-renew service
   template:
     src: certbot-renew.service.j2
     dest: /etc/systemd/system/certbot-renew.service
   notify: certbot restart renew timer
+  vars:
+    certbot_script_path: "{{ certbot_script_absolute.stdout }}"
 
 - name: Create certbot-renew timer
   template:

@@ -1,4 +1,0 @@
----
-
-certbot_package: certbot
-certbot_web_service: httpd2

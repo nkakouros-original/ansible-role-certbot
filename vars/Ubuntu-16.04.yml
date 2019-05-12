@@ -1,4 +1,2 @@
 ---
-
 certbot_package: letsencrypt
-certbot_web_service: apache2
