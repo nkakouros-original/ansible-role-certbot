@@ -1,19 +1,13 @@
 ---
 
-- name: Resolve absolute path for certbot script
-  command: "which {{ certbot_script }}"
-  register: certbot_script_absolute
-  when: not certbot_install_from_source
-  changed_when: false
-
 - name: Create certbot-renew service
   template:
     src: certbot-renew.service.j2
     dest: /etc/systemd/system/certbot-renew.service
-  notify: restart-certbot-renew-service
+  notify: certbot restart renew timer
 
 - name: Create certbot-renew timer
   template:
     src: certbot-renew.timer.j2
     dest: /etc/systemd/system/certbot-renew.timer
-  notify: restart-certbot-renew-service
+  notify: certbot restart renew timer

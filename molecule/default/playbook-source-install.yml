@@ -1,8 +1,11 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
-    certbot_install_from_source: yes
+    certbot_install_from_source: true
+    certbot_auto_renew_user: root
 
   pre_tasks:
     - name: Update apt cache.
@@ -12,4 +15,4 @@
 
   roles:
     - geerlingguy.git
-    - role_under_test
+    - geerlingguy.certbot

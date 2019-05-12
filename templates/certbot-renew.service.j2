@@ -4,10 +4,6 @@ Description=Let's Encrypt renewal service
 [Service]
 User={{ certbot_auto_renew_user }}
 Type=oneshot
-{% if certbot_script_absolute.stdout is defined %}
-  ExecStart={{ certbot_script_absolute.stdout }} renew --quiet --agree-tos
-{% else %}
-  ExecStart={{ certbot_script }} renew --quiet --agree-tos
-{% endif %}
+ExecStart={{ certbot_script }} renew --quiet --agree-tos
 
 ExecStartPost=/bin/systemctl reload {{ certbot_web_service }}.service

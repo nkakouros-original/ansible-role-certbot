@@ -1,8 +1,8 @@
 ---
 
-- name: Restart certbot-renew service
+- name: Restart certbot-renew timer
   service:
     name: certbot-renew.timer
     state: restarted
     enabled: true
-  listen: restart-certbot-renew-service
+  listen: certbot restart renew timer
