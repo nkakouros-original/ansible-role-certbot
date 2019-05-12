@@ -11,3 +11,8 @@
     src: certbot-renew.timer.j2
     dest: /etc/systemd/system/certbot-renew.timer
   notify: certbot restart renew timer
+
+- name: Start certbot-renew timer
+  systemd:
+    name: certbot-renew.timer
+    state: started
