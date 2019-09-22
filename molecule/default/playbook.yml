@@ -1,11 +1,12 @@
 ---
+
 - name: Converge
   hosts: all
   become: true
-
   vars:
     certbot_auto_renew_user: root
-    certbot_auto_renew_systemd: "{{ lookup('env', 'CERTBOT_AUTO_RENEW_SYSTEMD') }}"
+    certbot_auto_renew_systemd:
+      "{{ lookup('env', 'CERTBOT_AUTO_RENEW_SYSTEMD') }}"
 
   pre_tasks:
     - name: Update apt cache.
@@ -25,4 +26,4 @@
       when: ansible_os_family == 'Debian'
 
   roles:
-    - geerlingguy.certbot
+    - nkakouros.certbot

@@ -1,18 +1,32 @@
 ---
-# Certbot auto-renew cron job configuration (for certificate renewals).
+
+certbot_enabled: true
+# Set to false to completely disable the role
+
 certbot_auto_renew: true
 certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
 certbot_auto_renew_hour: "3"
 certbot_auto_renew_minute: "30"
 certbot_auto_renew_options: "--quiet --no-self-upgrade"
+# By default, this role configures a systemd timer to run under the provided
+# user account at the given hour and minute, every day. The defaults run
+# `certbot renew` (or `certbot-auto renew`) every day at 03:30:00 by the user
+# you use in your Ansible playbook. It's preferred that you set a custom
+# user/hour/minute so the renewal is during a low-traffic period and done by
+# a non-root user account. Set `certbot_auto_renew` to false to disable
+# automatic updating.
 
-# Use a systemd timer instead of a cron job to renew certificates
-certbot_auto_renew_systemd: false
-
-# Parameters used when creating new Certbot certs.
 certbot_create_if_missing: false
+# Set to true to let this role generate certs.
+
 certbot_create_method: standalone
+# Currently, this is the only supported method to generate certificates.
+
 certbot_admin_email: email@example.com
+# The email address used to agree to Let's Encrypt's TOS and subscribe to
+# cert-related notifications. This should be customized and set to an email
+# address that you or your organization regularly monitors.
+
 certbot_certs: []
 # - email: janedoe@example.com
 #   domains:
@@ -20,15 +34,25 @@ certbot_certs: []
 #     - example2.com
 # - domains:
 #     - example3.com
+# A list of domains (and other data) for which certs should be generated. You
+# can add an `email` key to any list item to override the `certbot_admin_email`.
+
 certbot_create_command: >-
   {{ certbot_script }} certonly --standalone --noninteractive --agree-tos
   --email {{ cert_item.email | default(certbot_admin_email) }}
   -d {{ cert_item.domains | join(',') }}
+# The `certbot_create_command` defines the command used to generate the cert.
 
 certbot_create_standalone_stop_services:
   - nginx
   # - apache
   # - varnish
+# Services that should be stopped while `certbot` runs it's own standalone
+# server on ports 80 and 443. If you're running Apache, set this to `apache2`
+# (Ubuntu), or `httpd` (RHEL), or if you have Nginx on port 443 and something
+# else on port 80 (e.g. Varnish, a Java app, or something else), add it to the
+# list so it is stopped when the certificate is generated.  These services will
+# only be stopped the first time a new cert is generated.
 
 # To install from source (on older OSes or if you need a specific or newer
 # version of Certbot), set this variable to `yes` and configure other options.
@@ -36,6 +60,10 @@ certbot_install_from_source: false
 certbot_repo: https://github.com/certbot/certbot.git
 certbot_version: master
 certbot_keep_updated: true
+# To install from source, set `certbot_install_from_source` to `yes`. This
+# clones the configured `certbot_repo`, respecting the `certbot_version`
+# setting. If `certbot_keep_updated` is set to `yes`, the repository is updated
+# every time this role runs.
 
-# Where to put Certbot when installing from source.
 certbot_dir: /opt/certbot
+# Where to put Certbot when installing from source.

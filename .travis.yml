@@ -1,4 +1,5 @@
 ---
+
 language: python
 services: docker
 
@@ -7,13 +8,9 @@ env:
     - ROLE_NAME: certbot
   matrix:
     - MOLECULE_DISTRO: centos7
-    - MOLECULE_DISTRO: centos6
       MOLECULE_PLAYBOOK: playbook-source-install.yml
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: ubuntu1604
-      CERTBOT_AUTO_RENEW_SYSTEMD: true
-    - MOLECULE_DISTRO: ubuntu1604
-    - MOLECULE_DISTRO: ubuntu1404
       MOLECULE_PLAYBOOK: playbook-source-install.yml
     - MOLECULE_DISTRO: debian9
 
@@ -22,13 +19,11 @@ install:
   - pip install molecule docker
 
 before_script:
-  # Use actual Ansible Galaxy role name for the project directory.
   - cd ../
-  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
-  - cd geerlingguy.$ROLE_NAME
+  - mv ansible-role-$ROLE_NAME nkakouros.$ROLE_NAME
+  - cd nkakouros.$ROLE_NAME
 
 script:
-  # Run tests.
   - molecule test
 
 notifications:
