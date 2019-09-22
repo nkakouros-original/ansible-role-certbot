@@ -1,27 +1,30 @@
 ---
 
-- import_tasks: include-vars.yml
+- include_tasks: include-vars.yml
 
-- import_tasks: install-with-package.yml
+- include_tasks: install-with-package.yml
   when: not certbot_install_from_source | bool
 
-- import_tasks: install-from-source.yml
+- include_tasks: install-from-source.yml
   when: certbot_install_from_source | bool
 
-- include_tasks: create-cert-standalone.yml
-  with_items: "{{ certbot_certs }}"
+- include_tasks: hooks.yml
+  when: certbot_hooks_enable | bool
+
+- include_tasks: standalone.yml
+  loop: "{{ certbot_certs }}"
+  loop_control:
+    loop_var: cert_item
   when:
     - certbot_create_if_missing | bool
     - certbot_create_method == 'standalone'
-  loop_control:
-    loop_var: cert_item
 
-- include: systemd.yml
+- include_tasks: systemd.yml
   when:
     - certbot_auto_renew
     - certbot_auto_renew_systemd
 
-- import_tasks: renew-cron.yml
+- include_tasks: renew-cron.yml
   when:
     - certbot_auto_renew
     - not certbot_auto_renew_systemd

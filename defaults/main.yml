@@ -41,7 +41,32 @@ certbot_create_command: >-
   {{ certbot_script }} certonly --standalone --noninteractive --agree-tos
   --email {{ cert_item.email | default(certbot_admin_email) }}
   -d {{ cert_item.domains | join(',') }}
+  {{ '--pre-hook /etc/letsencrypt/renewal-hooks/pre/hook'
+    if certbot_hooks_enable
+  else '' }}
+  {{ '--post-hook /etc/letsencrypt/renewal-hooks/post/hook'
+    if certbot_hooks_enable
+  else '' }}
 # The `certbot_create_command` defines the command used to generate the cert.
+
+certbot_hooks_enable: true
+# Set to true to create pre and post hooks that will run before and after
+# creating/renewing certificates. This is useful to eg stop web servers from
+# running on port 80/443 so that certbot can run its own server (in standalone
+# mode) and request the certificates.
+
+certbot_hooks_pre: []
+certbot_hooks_port:[]
+# By default, if `certbot_hooks_enable` is true, the role will install a pre and
+# a post hook that will disable and enable the services defined in
+# `certbot_create_standalone_stop_services` before and after generating/renewing
+# certificates. If you want more stuff to happen as part of the hooks, you can
+# use these two lists to define blocks of shell commands that you want to run.
+# Eg:
+# certbot_hooks_pre:
+#   - |
+#      chmod -R ubuntu:ubuntu /etc/letsencrypt/
+#      rm -rf /tmp/*
 
 certbot_create_standalone_stop_services:
   - nginx
