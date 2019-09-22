@@ -1,4 +1,4 @@
 ---
 
 - import_tasks: certbot.yml
-  when: certbot_enabled | true
+  when: certbot_enabled | bool

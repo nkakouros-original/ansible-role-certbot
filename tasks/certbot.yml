@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: include-vars.yml
+- include_tasks: variables.yml
 
 - include_tasks: install-with-package.yml
   when: not certbot_install_from_source | bool
@@ -21,10 +21,4 @@
 
 - include_tasks: systemd.yml
   when:
-    - certbot_auto_renew
-    - certbot_auto_renew_systemd
-
-- include_tasks: renew-cron.yml
-  when:
-    - certbot_auto_renew
-    - not certbot_auto_renew_systemd
+    - certbot_auto_renew | bool
