@@ -16,8 +16,8 @@ The variable `certbot_install_from_source` controls whether to install Certbot f
 
     certbot_auto_renew: true
     certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
-    certbot_auto_renew_hour: 3
-    certbot_auto_renew_minute: 30
+    certbot_auto_renew_hour: "3"
+    certbot_auto_renew_minute: "30"
     certbot_auto_renew_options: "--quiet --no-self-upgrade"
 
 
@@ -92,8 +92,8 @@ None.
 
       vars:
         certbot_auto_renew_user: your_username_here
-        certbot_auto_renew_minute: 20
-        certbot_auto_renew_hour: 5
+        certbot_auto_renew_minute: "20"
+        certbot_auto_renew_hour: "5"
 
       roles:
         - geerlingguy.certbot
