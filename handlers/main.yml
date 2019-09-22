@@ -4,5 +4,6 @@
   service:
     name: certbot-renew.timer
     state: restarted
+    daemon_reload: true
     enabled: true
   listen: certbot restart renew timer
