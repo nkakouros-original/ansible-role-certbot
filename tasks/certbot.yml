@@ -2,11 +2,7 @@
 
 - include_tasks: variables.yml
 
-- include_tasks: install-with-package.yml
-  when: not certbot_install_from_source | bool
-
-- include_tasks: install-from-source.yml
-  when: certbot_install_from_source | bool
+- include_tasks: install.yml
 
 - include_tasks: hooks.yml
   when: certbot_hooks_enable | bool

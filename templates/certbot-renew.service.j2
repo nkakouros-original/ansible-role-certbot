@@ -6,5 +6,5 @@ Documentation=https://letsencrypt.readthedocs.io/en/latest/
 [Service]
 User={{ certbot_auto_renew_user }}
 Type=oneshot
-ExecStart={{ certbot_script_path }} renew {{ certbot_auto_renew_options }}
+ExecStart=/usr/bin/certbot renew {{ certbot_auto_renew_options }}
 PrivateTmp=true

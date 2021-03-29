@@ -1,0 +1,12 @@
+---
+
+- name: Install certbot snap
+  community.general.snap:
+    name: certbot
+    classic: true
+
+- name: Prepare the certbot command
+  file:
+    src: /snap/bin/certbot
+    dest: /usr/bin/certbot
+    state: link
